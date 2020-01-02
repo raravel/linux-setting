@@ -1,0 +1,73 @@
+#!/usr/bin/node
+const fs = require('fs');
+const path = require('path');
+const { exec, execSync } = require('child_process');
+
+//[ "/usr/bin/node", "vimrun", ... ] to [...]
+const args = process.argv.slice(2);
+
+//"yyyymmdd"
+Date.prototype.yyyymmdd = function(flag_) {
+	let flag = flag_ ? flag_ : "";
+    let yyyy = this.getFullYear().toString();
+    let mm = (this.getMonth()+1).toString();
+    let dd  = this.getDate().toString();
+    let hh = (this.getHours()).toString();
+    let MM = (this.getMinutes()).toString(); 
+    let ss = (this.getSeconds()).toString();
+    return `${yyyy}${flag}${mm[1] ? mm : 0+mm[0]}${flag}${dd[1] ? dd : 0+dd[0]}`; 
+};
+
+//"hhMMss"
+Date.prototype.hhMMss = function(flag_) {
+	let flag = flag_ ? flag_ : "";
+    let hh = (this.getHours()).toString();
+    let MM = (this.getMinutes()).toString();
+    let ss = (this.getSeconds()).toString();
+    return `${hh[1] ? hh : "0"+hh[0]}${flag}${MM[1] ? MM : "0"+MM[0]}${flag}${ss[1] ? ss : "0"+ss[0]}`;
+};
+
+//"hhMM"
+Date.prototype.hhMM = function(flag_) {
+	let flag = flag_ ? flag_ : "";
+    let hh = (this.getHours()).toString();
+    let MM = (this.getMinutes()).toString();
+    return `${hh[1] ? hh : "0"+hh[0]}${flag}${MM[1] ? MM : "0"+MM[0]}`;
+};
+
+const mkdir = (path_, dir_) => {
+	if ( !fs.existsSync(path_) ) {
+		var directorys = path_.split('/');
+		var d = dir_ ? dir_ : "./";
+		directorys.forEach((dir_, key_) => {
+			if(dir_.replace(/ /g, '') == '') {
+				return false;
+			}   
+			d = path.join(d, dir_);
+			if (!fs.existsSync(d)) {
+				fs.mkdirSync(d);
+			}   
+		}); 
+	}
+};
+
+const historyDir = path.join(process.env.HOME, ".vimhistory");
+//console.log(execSync("ls ~").toString());
+
+//program start
+//args : [ "/directory/file" ]
+if ( args[0] ) {
+	var now = new Date();
+	let fullpath = args[0];
+	let directory = path.dirname(fullpath);
+	let file = path.basename(fullpath);
+	let new_filename = path.join(historyDir, directory, `${file}_${now.yyyymmdd()}_${now.hhMM()}`);
+
+	mkdir(path.join(historyDir, directory), "/");
+	fs.copyFile(fullpath, new_filename, () => {
+		fs.readFile(historyDir + "/vimhis.txt", (err, data) => {
+			fs.writeFile(historyDir + "/vimhis.txt", `${now.yyyymmdd("-")} - ${now.hhMMss(":")} | ${fullpath}\n${data}`, (err) => { });
+		});
+	});
+}
+

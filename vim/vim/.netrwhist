@@ -1,0 +1,5 @@
+let g:netrw_dirhistmax  =10
+let g:netrw_dirhistcnt =3
+let g:netrw_dirhist_3='/home/youn/proj/linux-setting/vim'
+let g:netrw_dirhist_2='/home/youn/proj/linux-setting/vim/.vim'
+let g:netrw_dirhist_1='/home/youn/proj/linux-setting/vim'
