@@ -76,7 +76,7 @@ Plugin 'bogado/file-line'				"vi file:line
 Plugin 'Quramy/tsuquyomi'				"Typescript Engine
 Plugin 'crusoexia/vim-monokai'
 Plugin 'joshdick/onedark.vim'
-Plugin 'airblade/vim-rooter'
+"Plugin 'airblade/vim-rooter'
 
 
 call vundle#end()
@@ -160,9 +160,24 @@ map <C-k><C-r> :Swoop!
 
 
 "                NERDTree Setting                "
- let NERDTreeShowHidden=1
- let NERDTreeMapOpenInTab='<SPACE>'
- map <C-k><C-l> :NERDTreeToggle<cr>
+let g:NERDTreeShowHidden=1
+let g:NERDTreeMapOpenInTab='<SPACE>'
+let g:NERDTreeChDirMode=2
+function! NERDTreeToggleInCurDir()
+	" If NERDTree is open in the current buffer
+	if (exists("t:NERDTreeBufName") && bufwinnr(t:NERDTreeBufName) != -1)
+		exe ":NERDTreeClose"
+	else
+		if (expand("%:t") != '')
+			exe ":NERDTreeFind"
+		else
+			exe ":NERDTreeToggle"
+		endif
+	endif
+endfunction
+"map <C-k><C-l> :NERDTreeToggle .<cr>
+map <C-k><C-l> :NERDTree .<cr><A>
+
 
 
 "                Closetag Setting                "
