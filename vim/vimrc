@@ -1,12 +1,8 @@
 "                Setting                "
 set nocompatible
 set nu
-set ts=4
 set fencs=utf-8,euc-kr,cp949,cp932,euc-jp,shift-jis,big5,latin1,ucs-2le
 set enc=UTF-8
-set et
-set sw=4
-set sm
 set ai
 set incsearch
 set hlsearch
@@ -14,39 +10,48 @@ set noexpandtab
 set nowrap
 set backspace=indent,eol,start
 set t_Co=256
-set cursorline
-"set termguicolors
 set rtp+=~/.vim/bundle/Vundle.vim
+"set expandtab
+set shiftwidth=4
+set tabstop=4
+set smartindent
+set clipboard=unnamedplus
+set redrawtime=10000
 
 set tags=./tags,tags,../tags,../../tags,../../../tags,../../../../tags,../../../../../tags,../../../../../../tags,../../../../../../../tags,../../../../../../../../tags,../../../../../../../../../tags,../../../../../../../../../../tags,../../../../../../../../../../../tags
-"set tags=./TAGS,TAGS,../TAGS,../../TAGS,../../../TAGS,../../../../TAGS,../../../../../TAGS,../../../../../../TAGS,../../../../../../../TAGS,../../../../../../../../TAGS,../../../../../../../../../TAGS,../../../../../../../../../../TAGS,../../../../../../../../../../../TAGS
 
+
+let &t_TI = ""
+let &t_TE = ""
 
 "                Keymap Setting                "
-map <C-]> :tj <C-r><C-w><cr>
-"map <S-H> :tabmove -1<cr>		   " move tab previous
-"map <S-L> :tabmove +1<cr>		   " move tab next 
-"map <C-h> :tabprev<cr>             " previous tab
-"map <C-j> :tabprev<cr>             " previous tab
-"map <C-l> :tabnext<cr>             " next tab
-"map <C-o> :tabnew ./<cr>           " create a new tab to now folder
-"map <C-n> :tabnew<cr>              " create a new tab to new file
-"map <C-d> :tabnew % <cr>:line(".")<cr>" create a new tab to now file
-map <C-h> :bprevious<cr>
-map <C-j> :bprevious<cr>
-map <C-l> :bnext<cr>
-map <C-o> :tabnew ./<cr>           " create a new tab to now folder
-map <C-n> :enew<cr>
+nmap <unique> <s-2> <Plug>NetrwRefresh
+nmap <C-]> :tj <C-r><C-w><cr>
+"nmap <S-H> :tabmove -1<cr>		   " move tab previous
+"nmap <S-L> :tabmove +1<cr>		   " move tab next
+"nmap <C-h> :tabprev<cr>             " previous tab
+"nmap <C-j> :tabprev<cr>             " previous tab
+"nmap <C-l> :tabnext<cr>             " next tab
+"nmap <C-o> :let g:netrw_browse_split=0<cr>:tabnew ./<cr>           " create a new tab to now folder
+"nmap <C-n> :tabnew<cr>              " create a new tab to new file
+"nmap <C-d> :tabnew % <cr>:line(".")<cr>" create a new tab to now file
 
-map <F5>  :e<cr>:source ~/.vimrc<cr>
-map <F6> Oprintf("%s():%d  \n", __FUNCTION__, __LINE__);<ESC>
-map <F7> Oprintf("%s():%d -------------------------------------------------- \n", __FUNCTION__, __LINE__);<ESC>
-map <F9> :w<cr>
-map <C-k><Esc> :q!<cr>
-map <C-k><C-n> :set nu!<cr>
-map <C-k><C-x> :%!xxd<cr>
-map <C-k><C-d> :%!xxd -r<cr>
-map <C-k><C-o> :botright vnew ~/.vimrc<cr>
+nmap <C-h> :bprevious<cr>             " previous tab
+nmap <C-j> :bprevious<cr>             " previous tab
+nmap <C-l> :bnext<cr>             " next tab
+nmap <C-n> :enew<cr>              " create a new tab to new file
+
+nmap <F6> Oprintf("%s():%d  \n", __FUNCTION__, __LINE__);<ESC>
+nmap <F7> Oprintf("%s():%d -------------------------------------------------- \n", __FUNCTION__, __LINE__);<ESC>
+nmap <F8> :TagbarToggle<CR>
+nmap <F9> :w<cr>
+nmap <C-k><Esc> :q!<cr>
+nmap <C-k><C-n> :set nu!<cr>
+nmap <C-k><C-x> :%!xxd<cr>
+nmap <C-k><C-d> :%!xxd -r<cr>
+nmap <C-k><C-o> :botright vnew ~/.vimrc<cr>
+nmap <F5> :SyntasticToggleMode<cr>
+nmap <F4> :SignifyToggle<cr>
 
 
 "               Plugin Setting                "
@@ -57,31 +62,45 @@ Plugin 'VundleVim/Vundle.vim'
 Plugin 'vim-airline/vim-airline'		"밑 상태바
 Plugin 'mhinz/vim-signify'				"svn, git과 다른 라인 표시
 Plugin 'majutsushi/tagbar'				"Tag 파일 기준으로 변수, 함수이름 보여줌 (TagList 비슷)
-"Plugin 'pelodelfuego/vim-swoop'		"버퍼 내 문자열 검색
-Plugin 'scrooloose/nerdtree'			"파일 트리
-Plugin 'ryanoasis/vim-devicons'			"NerdTree icon
 Plugin 'posva/vim-vue'					"Vue syntax
 Plugin 'alvan/vim-closetag'				"Auto close tag
-Plugin 'MattesGroeger/vim-bookmarks'	"Book mark
 Plugin 'vcscommand.vim'					"svn, git diff log 보기
-Plugin 'scrooloose/nerdcommenter'		"선택 영역 주석
-Plugin 'MultipleSearch'					"여러개 동시 검색
-Plugin 'pangloss/vim-simplefold'		"코드 폴딩
-Plugin 'blueyed/vim-diminactive'		"아웃 포커스창 흐리게
-Plugin 'vim-syntastic/syntastic'		"구문 체크
-"Plugin 'mhinz/vim-grepper'				"vim grep
-"Plugin 'terryma/vim-multiple-cursors'	"여러 줄 커서
-Plugin 'simnalamburt/vim-mundo'			"undo
-Plugin 'bogado/file-line'				"vi file:line 
-Plugin 'Quramy/tsuquyomi'				"Typescript Engine
-Plugin 'crusoexia/vim-monokai'
+Plugin 'bogado/file-line'				"vi file:line
 Plugin 'joshdick/onedark.vim'
-"Plugin 'airblade/vim-rooter'
-
+Plugin 'tomasr/molokai'
+Plugin 'ayu-theme/ayu-vim-airline'
+Plugin 'pangloss/vim-javascript'
+Plugin 'othree/html5.vim'
+Plugin 'mxw/vim-jsx'
+Plugin 'SirVer/ultisnips'
+Plugin 'honza/vim-snippets'
+Plugin 'The-NERD-Tree'
 
 call vundle#end()
 filetype plugin indent on
 
+
+" netrw
+
+"let g:netrw_browse_split = 3
+"let g:netrw_winsize = 13
+"let g:netrw_banner = 0
+"let g:netrw_liststyle = 3
+"" Toggle Vexplore with Ctrl-E
+"function! ToggleVExplorer()
+"  if exists("t:expl_buf_num")
+"      let expl_win_num = bufwinnr(t:expl_buf_num)
+"	  close
+"	  unlet t:expl_buf_num
+"  else
+"      Vexplore
+"      let t:expl_buf_num = bufnr("%")
+"  endif
+"endfunction
+"nmap <C-k><C-l> :let g_netrw_browse_split=3 <cr>:call ToggleVExplorer()<CR>
+
+" NERD Tree
+nmap <C-k><C-l> :NERDTreeToggle<CR>
 
 "               Syntax Setting                "
 
@@ -89,31 +108,27 @@ if has("syntax")
         syntax on           " Default to no syntax highlightning
 endif
 
-"colorscheme monokai
-colorscheme onedark 
 "colorscheme desert
-"colorscheme darkside_contrast
-"colorscheme ron
-"colorscheme koehler
-"colorscheme shine
-"colorscheme morning
-"colorscheme darkblue
-"colorscheme default
-"colorscheme evening
-"colorscheme murphy
-"colorscheme peachpuff
-"colorscheme slate
-"colorscheme torte
-"colorscheme blue
-"colorscheme delek
-"colorscheme elflord
-"colorscheme industry
-"colorscheme pablo
-"colorscheme railscasts
-"colorscheme zellner
+colorscheme onedark
+"colorscheme candystripe
+"colorscheme PaperColor
+
+" For Neovim > 0.1.5 and Vim > patch 7.4.1799 - https://github.com/vim/vim/commit/61be73bb0f965a895bfb064ea3e55476ac175162
+" Based on Vim patch 7.4.1770 (`guicolors` option) - https://github.com/vim/vim/commit/8a633e3427b47286869aa4b96f2bfc1fe65b25cd
+" https://github.com/neovim/neovim/wiki/Following-HEAD#20160511
+if (has('termguicolors'))
+  set termguicolors
+endif
+
+" UltiSnips
+let g:UltiSnipsExpandTrigger="<tab>"
+let g:UltiSnipsJumpForwardTrigger="<tab>"
+let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
+let g:UltiSnipsEditSplit="vertical"
 
 
 "               Airline Setting                "
+set background=dark
 let g:airline_theme='onedark'
 " 버퍼 목록 켜기
 let g:airline#extensions#tabline#enabled = 1
@@ -122,19 +137,7 @@ let g:airline#extensions#tabline#fnamemod = ':t'
 
 
 "               Signify Setting                "
-"map <C-k><C-s> :SignifyToggle<cr>
-
-"               Typescript Setting                "
-
-autocmd FileType typescript setlocal completeopt-=menu
-let g:tsuquyomi_completion_detail = 1
-" tooltip
-set ballooneval
-autocmd FileType typescript setlocal balloonexpr=tsuquyomi#balloonexpr()
-
-"               NeoComplcache Setting                "
-let g:neocomplcache_enable_at_startup=1
-map <C-k><C-e> :NeoComplCacheToggle<cr>
+map <C-k><C-s> :SignifyToggle<cr>
 
 
 "               Write Callback Setting                "
@@ -152,154 +155,12 @@ let g:tagbar_left=0
 map <C-k><C-t> :TagbarToggle<CR>
 
 
-"                Swoop Setting                "
-
-let g:swoopIgnoreCase=1
-let g:swoopPatternSpaceInsertsWildcard=1
-map <C-k><C-r> :Swoop! 
-
-
-"                NERDTree Setting                "
-let g:NERDTreeShowHidden=1
-let g:NERDTreeMapOpenInTab='<SPACE>'
-let g:NERDTreeChDirMode=2
-function! NERDTreeToggleInCurDir()
-	" If NERDTree is open in the current buffer
-	if (exists("t:NERDTreeBufName") && bufwinnr(t:NERDTreeBufName) != -1)
-		exe ":NERDTreeClose"
-	else
-		if (expand("%:t") != '')
-			exe ":NERDTreeFind"
-		else
-			exe ":NERDTreeToggle"
-		endif
-	endif
-endfunction
-"map <C-k><C-l> :NERDTreeToggle .<cr>
-map <C-k><C-l> :NERDTree .<cr><A>
-
 
 
 "                Closetag Setting                "
-let g:closetag_filenames = '*.html,*.ejs,*.vue'
-let g:closetag_filetypes = 'html,ejs,vue'
+let g:closetag_filenames = '*.html,*.ejs,*.vue,*.svelte,*.jsx,*.tsx'
+let g:closetag_filetypes = 'html,ejs,vue,svelte,react'
 
 
-"                Bookmark Setting                "
-map <C-m><C-h> :echo 'Bookmark [(C-t) Toggle] [(C-i) Annotate] [(C-n) Next] [(C-p) Prev] [(C-s) ShowAll] [(C-x) Clear] [(C-a) ClearAll]'<cr>
-map <C-m><C-t> :BookmarkToggle<cr>
-map <C-m><C-i> :BookmarkAnnotate 
-map <C-m><C-n> :BookmarkNext<cr>
-map <C-m><C-p> :BookmarkPrev<cr>
-map <C-m><C-a> :BookmarkShowAll<cr>
-map <C-m><C-x> :BookmarkClear<cr>
-map <C-m><C-c> :BookmarkClearAll<cr>
-
-
-"                Search Setting                "
-let g:MultipleSearchMaxColors=11
-let g:MultipleSearchColorSequence="darkcyan,gray,LightCyan,LightBlue,LightGreen,blue,green,magenta,cyan,gray,brown"
-let g:MultipleSearchTextColorSequence="white,DarkRed,black,black,black,white,black,white,red,black,white"
-map <C-s> :echo 'Search [(C-n) Search] [(C-k) current word search] [(C-r) Reset]'<cr>
-map <C-s><C-n> :Search 
-map <C-s><C-k> :Search <C-r><C-w><cr>
-map <C-s><C-r> :SearchReset<cr>
-
-
-"                 SimpleFold Setting                "
-let g:SimpylFold_docstring_preview=1
-
-
-"                 Diminactive Setting                "
-let g:diminactive_enable_focus=1
-
-
-"                 Mundo Setting                "
-set undofile
-set undodir="~/.vimhistory"
-let g:mundo_width = 60
-let g:mundo_preview_height=25
-let g:mundo_right = 1
-map <C-k><C-m> :MundoToggle<cr>
-
-
-"                 MultiCursor Setting                "
-"let g:multi_cursor_use_default_mapping=0
-"let g:multi_cursor_start_word_key      = '<C-c><C-s>'
-"let g:multi_cursor_select_all_word_key = '<C-c><C-a>'
-"let g:multi_cursor_start_key           = 'g<C-c><C-s>'
-"let g:multi_cursor_select_all_key      = 'g<C-c><C-a>'
-"let g:multi_cursor_next_key            = '<C-n>'
-"let g:multi_cursor_prev_key            = '<C-p>'
-"let g:multi_cursor_skip_key            = '<C-x>'
-"let g:multi_cursor_quit_key            = '<Esc>'
-
-
-"                 Grepper Setting                "
-"let g:grepper = { 'open' : 1, 'side' : 1, 'side_cmd' : 'botright vnew', 'switch': 0, 'highlight': 1 }
-" let g:grepper = { 'open' : 1, 'switch': 0, 'highlight': 1 }
-" map <C-g> :echo 'Grepper: [(C-g) grep] [(C-w) current word grep] [(C-p) current word grep for c] [(C-j) current word grep for vue/js]'<cr>
-" map <C-g><C-g> :Grepper -tool grep<cr>
-" map <C-g><C-w> :GrepperGrep <C-r><C-w> .<cr>
-" map <C-g><C-p> :GrepperGrep <C-r><C-w> --include=*.[ch] .<cr>
-" map <C-g><C-j> :GrepperGrep <C-r><C-w> --include=*.vue --include=*.js .<cr>
-
-
-
-"                 Syntastic Setting                "
-let g:syntastic_html_tidy_ignore_errors=[
-    \'proprietary attribute "ng-',
-    \'proprietary attribute "chart-',
-    \'proprietary attribute "pdk-'
-\]
-let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_check_on_wq = 0
-let g:syntastic_loc_list_height = 5
-let g:syntastic_javascript_checkers = ['eslint']
-let g:syntastic_json_checkers = ['jsonlint']
-let g:syntastic_css_checkers = ['csslint']
-let g:syntastic_c_compile = 'gcc'
-let g:syntastic_html_checkers = ['jshint']
-let g:syntastic_typescript_checkers = ['tsuquyomi'] " You shouldn't use 'tsc' checker.
-let g:syntastic_error_symbol = 'X'
-let g:syntastic_warning_symbol = '!'
-let g:syntastic_style_error_symbol = '?'
-let g:syntastic_style_warning_symbol = '>'
-highlight link SyntasticErrorSign SignColumn
-highlight link SyntasticWarningSign SignColumn
-highlight link SyntasticStyleErrorSign SignColumn
-highlight link SyntasticStyleWarningSign SignColumn
-
-
-"                Nerdcommenter Setting                "
-" Add spaces after comment delimiters by default
-let g:NERDSpaceDelims = 1
-" Use compact syntax for prettified multi-line comments
-let g:NERDCompactSexyComs = 1
-" Align line-wise comment delimiters flush left instead of following code indentation
-let g:NERDDefaultAlign = 'left'
-" Set a language to use its alternate delimiters by default
-let g:NERDAltDelims_java = 1
-" Add your own custom formats or override the defaults
-let g:NERDCustomDelimiters = { 'c': { 'left': '/**','right': '*/' } }
-" Allow commenting and inverting empty lines (useful when commenting a region)
-let g:NERDCommentEmptyLines = 1
-" Enable trimming of trailing whitespace when uncommenting
-let g:NERDTrimTrailingWhitespace = 1
-" Enable NERDCommenterToggle to check all selected lines is commented or not 
-let g:NERDToggleCheckAllLines = 1
-map <Leader>cz <plug>NERDCommenterNested
-map <leader>cs <plug>NERDCommenterInvert
-
-"[count]<leader>cc |NERDCommenterComment| Comment out the current line or text selected in visual mode.
-"[count]<leader>cn |NERDCommenterNested| Same as cc but forces nesting.
-"[count]<leader>c<space> |NERDCommenterToggle| Toggles the comment state of the selected line(s). If the topmost selected line is commented, all selected lines are uncommented and vice versa.
-"[count]<leader>cm |NERDCommenterMinimal| Comments the given lines using only one set of multipart delimiters.
-"[count]<leader>ci |NERDCommenterInvert| Toggles the comment state of the selected line(s) individually.
-"[count]<leader>cs |NERDCommenterSexy| Comments out the selected lines with a pretty block formatted layout.
-"[count]<leader>cy |NERDCommenterYank| Same as cc except that the commented line(s) are yanked first.
-"<leader>c$ |NERDCommenterToEOL| Comments the current line from the cursor to the end of line.
-"<leader>cA |NERDCommenterAppend| Adds comment delimiters to the end of line and goes into insert mode between them.
-"<leader>ca |NERDCommenterAltDelims| Switches to the alternative set of delimiters.
-"[count]<leader>cl |NERDCommenterAlignLeft [count]<leader>cb |NERDCommenterAlignBoth Same as |NERDCommenterComment| except that the delimiters are aligned down the left side (<leader>cl) or both sides (<leader>cb).
-"[count]<leader>cu |NERDCommenterUncomment| Uncomments the selected line(s).
+highlight ExtraWhitespace ctermbg=52
+match ExtraWhitespace /\s\+$/
