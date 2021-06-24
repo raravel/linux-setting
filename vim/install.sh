@@ -11,6 +11,7 @@ rm -f ~/.vimrc
 rm -rf ~/.vim
 ln -s "${CURPATH}/vimrc" ~/.vimrc 
 ln -s "${CURPATH}/vim" ~/.vim
+sudo ln -s "${CURPATH}/vim-backup" /usr/bin/vim-backup
 mkdir ~/.vimhistory
 touch ~/.vimhistory/vimhis.txt
 

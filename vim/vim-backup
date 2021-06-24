@@ -1,0 +1,22 @@
+#!/usr/bin/env node
+const path = require('path');
+const fs = require('fs');
+const os = require('os');
+
+const args = process.argv.splice(2);
+const cwd = process.cwd();
+
+const VIMDIR = new RegExp(`^${path.resolve(os.homedir(), '.vimhistory')}`);
+
+args.forEach((file, idx) => {
+	const source = path.resolve(cwd, file);
+
+	if ( !fs.existsSync(source) ) {
+		return;
+	}
+
+	const target = path.resolve(cwd, file.replace(/(.*)?_\d{4}\d{2}\d{2}_\d{2}\d{2}/, '$1')).replace(VIMDIR, '');
+
+	console.log(idx+1, '. ', source, target);
+	fs.copyFileSync(source, target, fs.constants.COPYFILE_FICLONE);
+});
