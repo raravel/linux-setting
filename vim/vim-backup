@@ -17,6 +17,9 @@ args.forEach((file, idx) => {
 
 	const target = path.resolve(cwd, file.replace(/(.*)?_\d{4}\d{2}\d{2}_\d{2}\d{2}/, '$1')).replace(VIMDIR, '');
 
-	console.log(idx+1, '. ', source, target);
+	console.log('\x1b[38;5;219m'+idx+1+'.', '\x1b[38;5;37m'+path.basename(file), '\x1b[38;5;229m'+target, '\x1b[39m');
+	if ( !fs.existsSync(path.dirname(target)) ) {
+		fs.mkdirSync(path.dirname(target), { recursive: true });
+	}
 	fs.copyFileSync(source, target, fs.constants.COPYFILE_FICLONE);
 });
